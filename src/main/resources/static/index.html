@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Симуляция лесного пожара</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, 20px);
+            gap: 1px;
+        }
+        .cell {
+            width: 20px;
+            height: 20px;
+            background-color: #74B72E;
+        }
+        .burning {
+            background-color: #FF5733;
+        }
+    </style>
+</head>
+<body>
+<div id="grid" class="grid"></div>
+<button onclick="simulate()">Следующий шаг</button>
+
+<script>
+    const gridElement = document.getElementById('grid');
+    let gridState = createInitialGridState(10, 10);
+
+    function createInitialGridState(height, width) {
+        return Array.from({ length: height }, () =>
+            Array.from({ length: width }, () => false)
+        );
+    }
+
+    // Визуализация начального состояния сетки
+    function renderGrid(grid) {
+        gridElement.innerHTML = ''; // Очистка сетки
+        grid.forEach((row, i) => {
+            const rowElement = document.createElement('div');
+            row.forEach((cell, j) => {
+                const cellElement = document.createElement('div');
+                cellElement.classList.add('cell');
+                if (cell) cellElement.classList.add('burning'); // Если ячейка горит
+                rowElement.appendChild(cellElement);
+            });
+            gridElement.appendChild(rowElement);
+        });
+    }
+    // Симуляция следующего шага
+    function simulate() {
+        // Для MVP предположим, что состояние сетки обновляется случайным образом
+        gridState = gridState.map(row => row.map(cell => Math.random() < 0.5));
+        renderGrid(gridState);
+    }
+
+    // Начальная отрисовка сетки
+    renderGrid(gridState);
+</script>
+</body>
+</html>
