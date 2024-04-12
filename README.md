@@ -1,2 +1,2 @@
 # forestfire
-forest fire simulation
+Forest fire simulation MVP
